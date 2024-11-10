@@ -21,15 +21,15 @@ A news app built using **React Native** and **Expo** that fetches data from the 
 
 <div  align="center">
 
-<img  src="https://github.com/Hariram-6674/NewzApp/raw/master/images/image1.png">
+<img  src="https://github.com/Hariram-6674/NewzApp/raw/master/images/image1.jpeg">
 
-<img  src="https://github.com/Hariram-6674/NewzApp/raw/master/images/image2.png">
+<img  src="https://github.com/Hariram-6674/NewzApp/raw/master/images/image2.jpeg">
 
-<img  src="https://github.com/Hariram-6674/NewzApp/raw/master/images/image3.png">
+<img  src="https://github.com/Hariram-6674/NewzApp/raw/master/images/image3.jpeg">
 
-<img  src="https://github.com/Hariram-6674/NewzApp/raw/master/images/image4.png">
+<img  src="https://github.com/Hariram-6674/NewzApp/raw/master/images/image4.jpeg">
 
-<img  src="https://github.com/Hariram-6674/NewzApp/raw/master/images/image5.png">
+<img  src="https://github.com/Hariram-6674/NewzApp/raw/master/images/image5.jpeg">
 
 </div>
 

@@ -1,50 +1,63 @@
-# Welcome to your Expo app 👋
+# NewsApp - React Native & Expo
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A news app built using **React Native** and **Expo** that fetches data from the [NewsData.io API](https://newsdata.io/documentation). The app allows users to stay updated on breaking news, search for specific articles, and save articles for later viewing.
 
-## Get started
+## Features
 
-1. Install dependencies
+### 1. **Home Page**
 
-   ```bash
-   npm install
-   ```
+- **Breaking News:** Displays the latest breaking news headlines.
+- **News List:** A list of news articles is shown at the bottom of the screen, allowing users to explore more stories.
 
-2. Start the app
+### 2. **Discover Page**
 
-   ```bash
-    npx expo start
-   ```
+- **Search Functionality:** Users can search for specific news articles by keywords, categories, or sources.
 
-In the output, you'll find options to open the app in a
+### 3. **Saved Page**
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- **Saved Articles:** Users can save articles for later viewing. The saved articles are shown on this page.This is done using AsyncStorage from React Native.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Screenshots
 
-## Get a fresh project
+<div  align="center">
 
-When you're ready, run:
+<img  src="https://github.com/Hariram-6674/NewzApp/raw/master/images/image1.png">
+
+<img  src="https://github.com/Hariram-6674/NewzApp/raw/master/images/image2.png">
+
+<img  src="https://github.com/Hariram-6674/NewzApp/raw/master/images/image3.png">
+
+<img  src="https://github.com/Hariram-6674/NewzApp/raw/master/images/image4.png">
+
+<img  src="https://github.com/Hariram-6674/NewzApp/raw/master/images/image5.png">
+
+</div>
+
+## Getting Started
+
+### 1. Clone the repository:
 
 ```bash
-npm run reset-project
+git clone https://github.com/Hariram-6674/NewzApp.git
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 2. Install the dependencies:
 
-## Learn more
+```bash
+npm install
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+### 3. Start the Expo development server:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+npx expo start
+```
 
-## Join the community
+### 4. Run the app
 
-Join our community of developers creating universal apps.
+- For running on emulator press `a` for android and `i` for Iphone.
+- For running on actual phone install [Expo Go](https://expo.dev/go)
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### Conclusion
+
+The News App built using React Native and Expo provides a comprehensive news experience for users. With the ability to view breaking news, search for specific news, and save articles for later, this app offers a seamless and engaging news consumption platform.

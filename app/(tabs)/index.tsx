@@ -1,70 +1,110 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { ScrollView, StatusBar, Text, View, RefreshControl, Platform } from "react-native";
+import React, { useEffect, useState, useCallback } from "react";
+import Header from "../../components/Header";
+import axios from "axios";
+import { NewzType } from "@/types";
+import Breaking from "@/components/Breaking";
+import Categories from "@/components/Categories";
+import NewsList from "@/components/NewsList";
+import Loading from "@/components/Loading";
+import { SafeAreaView } from "react-native-safe-area-context";
+import * as NavigationBar from 'expo-navigation-bar';
 
 export default function HomeScreen() {
+  const [breakingNewz, setBreakingNewz] = useState<NewzType[]>([]);
+  const [newss, setNewss] = useState<NewzType[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [greeting, setGreeting] = useState("");
+
+  useEffect(() => {
+    setupInitialData();
+    setupNavigationBar();
+  }, []);
+
+  const setupInitialData = async () => {
+    await Promise.all([getBreaking(), getNews()]);
+  };
+
+  const getBreaking = async () => {
+    try {
+      const URL = `https://newsdata.io/api/1/latest?apikey=${process.env.EXPO_PUBLIC_API_KEY}&language=en&image=1&removeduplicate=1&country=in&size=5`;
+      const response = await axios.get(URL);
+      if (response && response.data) {
+        setBreakingNewz(response.data.results);
+        setLoading(false);
+      }
+    } catch (err: any) {
+      console.log("Error fetching breaking news:", err);
+    }
+  };
+
+  const setupNavigationBar = async () => {
+    if (Platform.OS === 'android') {
+      await NavigationBar.setVisibilityAsync("hidden");
+      await NavigationBar.setBackgroundColorAsync("transparent");
+    }
+  };
+
+  const getNews = async (category: string = "") => {
+    try {
+      const categoryString = category ? `&category=${category}` : "";
+      const URL = `https://newsdata.io/api/1/latest?apikey=${process.env.EXPO_PUBLIC_API_KEY}&language=en${categoryString}&image=1&size=10`;
+      const response = await axios.get(URL);
+      if (response && response.data) {
+        setNewss(response.data.results);
+        setLoading(false);
+      }
+    } catch (err: any) {
+      console.log("Error fetching news:", err);
+    }
+  };
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await Promise.all([getBreaking(), getNews()]);
+    setRefreshing(false);
+  }, []);
+
+  const Catchange = (category: string) => {
+    setNewss([]);
+    getNews(category);
+  };
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <SafeAreaView className="flex-1 bg-[#1A1A1A]">
+      <StatusBar translucent backgroundColor="transparent" />
+      <ScrollView
+        refreshControl={
+          <RefreshControl 
+            refreshing={refreshing} 
+            onRefresh={onRefresh}
+            tintColor="#FFFFFF"
+          />
+        }
+        showsVerticalScrollIndicator={false}
+        className="flex-1"
+      >
+        <Header />
+        
+        <View className="px-4 mb-6">
+          <Text className="text-white text-2xl font-bold">
+            Your Daily News Update
+          </Text>
+        </View>
+
+        {loading ? (
+          <Loading size="large" />
+        ) : (
+          <>
+            <Breaking news={breakingNewz} />
+            <Categories categoryy={Catchange} />
+            <NewsList newslist={newss} />
+          </>
+        )}
+        
+        <View className="h-16" />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
